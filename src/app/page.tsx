@@ -8,12 +8,20 @@ import { JobProvider, useJobs } from "@/context/JobContext";
 import FiltersPanel from "@/components/filters/filterPannel";
 import JobList from "@/components/jobs/Joblist";
 import AppliedJobList from "@/components/jobs/Applied";
+import type { Job, JobType } from "@/types/job";
 
+interface FiltersState {
+  company: string;
+  types: JobType[];
+  minSalary: number;
+  maxSalary: number;
+  maxDistance: number;
+}
 
 function Dashboard() {
   const { appliedIds } = useJobs();
 
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<FiltersState>({
     company: "",
     types: [],
     minSalary: 0,
@@ -36,8 +44,8 @@ function Dashboard() {
     return () => window.clearTimeout(id);
   }, [notification]);
 
-  const jobsWithDistance = useMemo(() => {
-    return jobsData.map((job) => ({
+  const jobsWithDistance = useMemo<Job[]>(() => {
+    return (jobsData as Job[]).map((job) => ({
       ...job,
       distance: calculateDistance(
         JAIPUR_CENTER.lat,
@@ -104,14 +112,14 @@ function Dashboard() {
           </aside>
 
           <div className="space-y-6">
-            <div className="inline-flex rounded-full bg-slate-100 p-1 text-xs font-medium text-slate-600">
+            <div className="inline-flex rounded-full bg-slate-200/80 p-1 text-xs font-medium text-slate-600 shadow-sm backdrop-blur">
               <button
                 type="button"
                 onClick={() => setActiveTab("available")}
                 className={`rounded-full px-3 py-1 transition ${
                   activeTab === "available"
-                    ? "bg-white text-slate-900 shadow-sm"
-                    : "text-slate-500"
+                    ? "bg-sky-800 text-white shadow-md shadow-sky-300"
+                    : "text-slate-600 hover:text-slate-700 hover:bg-white/70"
                 }`}
               >
                 Available Jobs
@@ -121,8 +129,8 @@ function Dashboard() {
                 onClick={() => setActiveTab("applied")}
                 className={`rounded-full px-3 py-1 transition ${
                   activeTab === "applied"
-                    ? "bg-white text-slate-900 shadow-sm"
-                    : "text-slate-500"
+                    ? "bg-emerald-500 text-white shadow-md shadow-emerald-300"
+                    : "text-slate-500 hover:text-slate-700 hover:bg-white/70"
                 }`}
               >
                 Applied Jobs

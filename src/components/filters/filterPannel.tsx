@@ -25,7 +25,7 @@ export default function FiltersPanel({ filters, setFilters }: Props) {
         placeholder="Search company"
         value={filters.company}
         onChange={(e) => setFilters({ ...filters, company: e.target.value })}
-        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none ring-sky-100 transition focus:bg-white focus:ring-2 focus:ring-sky-300"
+        className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-500 outline-none ring-sky-100 transition focus:ring-2 focus:ring-sky-300"
       />
 
       <TypeChips
@@ -47,7 +47,7 @@ export default function FiltersPanel({ filters, setFilters }: Props) {
             onChange={(e) =>
               setFilters({ ...filters, minSalary: Number(e.target.value) })
             }
-            className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none ring-sky-100 transition focus:ring-2 focus:ring-sky-300"
+            className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-500 outline-none ring-sky-100 transition focus:ring-2 focus:ring-sky-300"
           />
           <input
             type="number"
@@ -56,7 +56,7 @@ export default function FiltersPanel({ filters, setFilters }: Props) {
             onChange={(e) =>
               setFilters({ ...filters, maxSalary: Number(e.target.value) })
             }
-            className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none ring-sky-100 transition focus:ring-2 focus:ring-sky-300"
+            className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-500 outline-none ring-sky-100 transition focus:ring-2 focus:ring-sky-300"
           />
         </div>
       </div>
