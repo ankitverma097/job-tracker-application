@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Jaipur Job Tracker
 
-## Getting Started
+Simple job-tracking dashboard focused on hourly/shift work around Jaipur. You can filter jobs by company, type, salary range, and distance from the city center, then apply/withdraw and see your applied list.
 
-First, run the development server:
+---
+
+## Demo
+
+**Local demo**
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Run the dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Open `http://localhost:3000` in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can apply to jobs, change filters, and refresh the page to see that applied jobs are persisted in local storage.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+# Setup & Run
 
-To learn more about Next.js, take a look at the following resources:
+- Requirements: Node 20+, npm
+- Install: `npm install`
+- Dev: `npm run dev`
+- Build: `npm run build` then `npm start`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# No environment variables are required.
+All job data is loaded from: src/data/jobs.json
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Architecture Overview
+---Built using Next.js (App Router).
+---The main page is located at:  src/app/page.tsx
+---This file renders the complete dashboard UI.
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# State Management
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+-Filter state (company, type, salary range, distance) is managed locally inside the Dashboard component.
+-Applied job IDs are managed globally using JobContext (src/context/JobContext.tsx).
+-Persistence is handled through a reusable useLocalStorage hook so applied jobs remain after page refresh.
+-This avoids prop drilling and keeps global state centralized.
+
+
+# Data Handling
+-Job data is stored locally in: src/data/jobs.json
+
+# Distance from Jaipur center is calculated on the client using a  formula inside:
+
+-src/lib/distance.ts
+
+# Jaipur coordinates and configuration values are stored in:
+-src/lib/constants.ts
+
+
+# UI Structure
+
+-Styled using Tailwind CSS v4.
+-Main reusable components:
+-FiltersPanel
+-TypeChips
+-JobList
+-AppliedJobList
+-JobCard
+
+
+# Static JSON Data
+
+-The assignment requires local JSON only, so there is no backend.
+
+# Client-side Filtering & Distance Calculation
+
+-All filtering and distance computation happen in memory on the client.
+This works well for small datasets but would not scale efficiently for very large datasets without pagination or server-side filtering.
+
+# Local Storage Persistence
+
+-Applied jobs are stored in localStorage, which means:
+-Data persists after refresh
+-It works per browser and per device
+-No cross-device synchronization
+
+
+# What I’d Do Next
+-Add Backend & API
+-Move job data to a database (e.g., Postgres or Mongodb etc.) and expose via API routes.
+-Implement server-side filtering, sorting, and pagination.
+
+# Add Authentication
+-we can add the functionality of authentication of the user and can create individual  dasboard for user so they can login and see the job . Also can see how many jobs applied by them 
+
+# Add Job Detail Page
+
+-Create dynamic routes for individual job details including:
+-Full description
+-Requirements
+
+
+
+
+
